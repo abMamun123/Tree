@@ -97,17 +97,92 @@ public:
         }
         return false;
     }
+    // delete node
+    void Delete(int val)
+    {
+        node *cur = root;
+        node *prev = NULL;
+        while (cur != NULL)
+        {
+            if (val > cur->data)
+            {
+                prev = cur;
+                cur = cur->right;
+            }
+            else if (val < cur->data)
+            {
+                prev = cur;
+                cur = cur->left;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (cur == NULL)
+        {
+            cout << "value is not present in bst\n";
+            return;
+        }
+        // case-1 both left and right null
+        if (cur->left == NULL && cur->right == NULL)
+        {
+            if (prev->left != NULL && prev->left->data == cur->data)
+            {
+                prev->left = NULL;
+            }
+            else
+            {
+                prev->right = NULL;
+            }
+            delete cur;
+            return;
+        }
+        // case: 2 one side null
+        if(cur->left!=NULL and cur->right == NULL){
+            if(prev->left!=NULL and prev->left->data == cur->data){
+                prev->left = cur->left;
+            }
+            else{
+                prev->right = cur->left;
+            }
+            delete cur;
+            return;
+        }
+         if(cur->left==NULL and cur->right != NULL){
+            if(prev->left!=NULL and prev->left->data == cur->data){
+                prev->left = cur->right;
+            }
+            else{
+                prev->right = cur->right;
+            }
+            delete cur;
+            return;
+        }
+        // case:3 both side have child
+        node *temp = cur->right;
+        while(temp->left!=NULL){
+            temp = temp->left;
+        }
+        int saved = temp->data;
+        Delete(saved);
+        cur->data = saved;
+    }
 };
 int main()
 {
     BST bst;
-    bst.insert(6);
-    bst.insert(4);
-    bst.insert(3);
-    bst.insert(5);
-    bst.insert(7);
     bst.insert(8);
+    bst.insert(7);
+    bst.insert(12);
+    bst.insert(5);
+    bst.insert(9);
+    bst.insert(11);
+    bst.insert(13);
+    bst.insert(10);
+    bst.insert(5);
+    cout << endl;
+    bst.Delete(7);
     bst.BFS();
-    cout<<bst.search(13);
     return 0;
 }

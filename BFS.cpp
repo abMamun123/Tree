@@ -32,6 +32,39 @@ public:
         newNode->right = NULL;
         return newNode;
     }
+     // insert in tree
+    void insert(int id, int val)
+    {
+        Node *newNode = CreateNewNode(id, val);
+        if (root == NULL)
+        {
+            root = newNode;
+            return;
+        }
+        queue<Node *> q;
+        q.push(root);
+        while (!q.empty())
+        {
+            Node *a = q.front();
+            q.pop();
+            if (a->left != NULL)
+                q.push(a->left);
+            else
+            {
+                a->left = newNode;
+                newNode->parent = a;
+                return;
+            }
+            if (a->right != NULL)
+                q.push(a->left);
+            else
+            {
+                a->right = newNode;
+                newNode->parent = a;
+                return;
+            }
+        }
+    };
     // build binary tree manually
     // void buildBinaryTree()
     // {
@@ -117,39 +150,7 @@ public:
         Postorder(a->right);
         cout << a->val << " ";
     }
-    // insert in tree
-    void insert(int id, int val)
-    {
-        Node *newNode = CreateNewNode(id, val);
-        if (root == NULL)
-        {
-            root = newNode;
-            return;
-        }
-        queue<Node *> q;
-        q.push(root);
-        while (!q.empty())
-        {
-            Node *a = q.front();
-            q.pop();
-            if (a->left != NULL)
-                q.push(a->left);
-            else
-            {
-                a->left = newNode;
-                newNode->parent = a;
-                return;
-            }
-            if (a->right != NULL)
-                q.push(a->left);
-            else
-            {
-                a->right = newNode;
-                newNode->parent = a;
-                return;
-            }
-        }
-    };
+   
     // search
     void search(Node *a, int val)
     {
@@ -165,15 +166,15 @@ int main()
 {
     Binary_tree bt;
     // bt.buildBinaryTree();
-    bt.insert(0, 20);
-    bt.insert(1, 10);
-    bt.insert(2, 22);
-    bt.insert(3, 5);
-    bt.insert(4, 12);
-    bt.insert(5, 21);
-    bt.insert(6, 25);
-    bt.insert(7, 3);
-    bt.insert(8, 15);
+    bt.insert(0, 1);
+    bt.insert(1, 2);
+    bt.insert(2, 3);
+    bt.insert(3, 7);
+    bt.insert(4, 9);
+    bt.insert(5, 6);
+    bt.insert(6, 4);
+    bt.insert(7, 10);
+    bt.insert(8, 12);
     bt.Inorder(bt.root);
     cout << "\n";
     bt.Preorder(bt.root);
@@ -181,7 +182,7 @@ int main()
     bt.Postorder(bt.root);
     cout << "\n";
     bt.BFS();
-    // cout << "\n";
+    cout << "\n";
     // bt.search(bt.root, 10);
     return 0;
 }
