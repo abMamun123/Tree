@@ -181,7 +181,7 @@ int main()
     cout << "\n";
     bt.Postorder(bt.root);
     cout << "\n";
-    bt.BFS();
+    bt.BFS(); 
     cout << "\n";
     // bt.search(bt.root, 10);
     return 0;
